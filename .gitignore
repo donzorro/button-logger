@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages
+/UnitTestProject1/obj/Debug
+/UnitTestProject1/bin/Debug
+/WpfApplication1/obj/Debug
+/WpfApplication1/bin/Debug
