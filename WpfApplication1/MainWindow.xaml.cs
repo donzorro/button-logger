@@ -144,7 +144,7 @@ namespace WpfApplication1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("stop clicked!");
+            System.Windows.MessageBox.Show("stop clicked!   ");
         }
     }
 }
