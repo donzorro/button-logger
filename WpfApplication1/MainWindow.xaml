@@ -1,53 +1,77 @@
 ﻿<Window
-  x:Class="WpfApplication1.MainWindow"
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:local="clr-namespace:WpfApplication1"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  Name="ctl"
-  Title="MainWindow"
-  Width="525"
-  Height="350"
-  mc:Ignorable="d">
-  <Grid
-    AutomationProperties.AutomationId="MainWindow">
-    <TextBox
-      x:Name="txtbox"
-      VerticalAlignment="Top"
-      AutomationProperties.AutomationId="txtbox" />
-    <ListBox
-      Margin="20,50"
-      AutomationProperties.AutomationId="Students"
-      ItemsSource="{Binding ElementName=ctl, Path=Students}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <Grid
-            AutomationProperties.AutomationId="{Binding StudentId}">
-            <StackPanel
-              Margin="5"
-              Orientation="Vertical">
-              <Button
-                AutomationProperties.AutomationId="StudentName"
-                Content="{Binding StudentId}" />
-              <local:financialvalue />
-            </StackPanel>
-          </Grid>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
-    <Button
-      HorizontalAlignment="Right"
-      VerticalAlignment="Bottom"
-      AutomationProperties.AutomationId="StartButton"
-      Click="Button_Click"
-      Content="start" />
-    <Button
-      x:Name="stopButton"
-      HorizontalAlignment="Left"
-      VerticalAlignment="Bottom"
-      AutomationProperties.AutomationId="stopButton"
-      Click="Button_Click_1"
-      Content="stop" />
-  </Grid>
+    x:Class="WpfApplication1.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApplication1"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="ctl"
+    Title="MainWindow"
+    Width="525"
+    Height="350"
+    mc:Ignorable="d">
+    <StackPanel
+        AutomationProperties.AutomationId="MainWindow"
+        Orientation="Vertical">
+        <ComboBox
+            x:Name="icecream"
+            AutomationProperties.AutomationId="icecream">
+            <ComboBoxItem
+                AutomationProperties.AutomationId="dulcedeleche"
+                Content="Dulce de leche" />
+            <ComboBoxItem
+                AutomationProperties.AutomationId="chocolate"
+                Content="Chocolate" />
+            <ComboBoxItem
+                AutomationProperties.AutomationId="frutilla"
+                Content="Frutilla" />
+            <ComboBoxItem
+                AutomationProperties.AutomationId="vainilla"
+                Content="Vainilla" />
+        </ComboBox>
+        <TextBox
+            x:Name="txtbox"
+            VerticalAlignment="Top"
+            AutomationProperties.AutomationId="txtbox" />
+        <ListBox
+            Margin="20,50"
+            AutomationProperties.AutomationId="Students"
+            ItemsSource="{Binding ElementName=ctl, Path=Students}">
+            <ListBox.ItemContainerStyle>
+                <Style
+                    BasedOn="{StaticResource {x:Type ListBoxItem}}"
+                    TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="AutomationProperties.AutomationId" Value="{Binding StudentId}" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        AutomationProperties.AutomationId="DataTemplate">
+                        <StackPanel
+                            Margin="5"
+                            Orientation="Vertical">
+                            <Button
+                                AutomationProperties.AutomationId="StudentName"
+                                Content="{Binding StudentId}" />
+                            <local:financialvalue />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            AutomationProperties.AutomationId="StartButton"
+            Click="Button_Click"
+            Content="start" />
+        <Button
+            x:Name="stopButton"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            AutomationProperties.AutomationId="stopButton"
+            Click="Button_Click_1"
+            Content="stop" />
+    </StackPanel>
 </Window>

@@ -45,11 +45,11 @@ namespace WpfApplication1
             if (uielement != null)
             {
                 var time = DateTime.Now;
-                //Point pt = input.GetPosition(this);
+                Point pt = input.GetPosition(uielement);
                 var id = GetStack(uielement);
 
                 if (!string.IsNullOrWhiteSpace(id))
-                    Console.WriteLine($"{time} User clicked element {id} on position");
+                    Console.WriteLine($"{time} User clicked element {id} on position {pt}");
             }
 
         }
@@ -89,12 +89,16 @@ namespace WpfApplication1
                 return fce != null ? fce.Parent : null;
             }
 
+            if (obj.GetType().Name.Contains("PopupRoot"))
+                return LogicalTreeHelper.GetParent(obj);
+
             return VisualTreeHelper.GetParent(obj);
         }
 
-        public static string GetStack(DependencyObject obj)
+        public static string GetStack(DependencyObject source)
         {
             var stack = new Stack<string>();
+            var obj = source;
             while (obj != null)
             {
                 var id = AutomationProperties.GetAutomationId(obj);
@@ -104,6 +108,11 @@ namespace WpfApplication1
                 }
 
                 obj = GetParent(obj);
+            }
+
+            if(stack.Count == 1)
+            {
+
             }
 
             return string.Join(".", stack);
