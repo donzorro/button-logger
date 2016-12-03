@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfApplication1.Recording;
 
 namespace WpfApplication1
 {
@@ -14,6 +16,8 @@ namespace WpfApplication1
     {
         public  MonitorService()
         {
+            UserActions = new ObservableCollection<UserAction>();
+
             InputManager.Current.PreProcessInput += (sender, e) =>
             {
                 if (e.StagingItem.Input is MouseButtonEventArgs)
@@ -33,6 +37,11 @@ namespace WpfApplication1
 
         }
 
+        public ObservableCollection<UserAction> UserActions
+        {
+            get; set;
+        }
+
         private void GlobalClickEventHandler(object sender, MouseButtonEventArgs input)
         {
             if (input.RoutedEvent.Name != "MouseDown")
@@ -49,7 +58,16 @@ namespace WpfApplication1
                 var id = GetStack(uielement);
 
                 if (!string.IsNullOrWhiteSpace(id))
+                {
                     Console.WriteLine($"{time} User clicked element {id} on position {pt}");
+                    UserActions.Add(new UserAction
+                    {
+                        Path = id,
+                        Point = pt,
+                        Time = time
+                    });
+                }
+                  
             }
 
         }
@@ -70,7 +88,18 @@ namespace WpfApplication1
                 var id = GetStack(uielement);
 
                 if (!string.IsNullOrWhiteSpace(id))
-                    Console.WriteLine($"{time} User typed {((KeyEventArgs)input).Key} on element {id} on position");
+                {
+                    var key = ((KeyEventArgs)input).Key;
+                    Console.WriteLine($"{time} User typed {key} on element {id} on position");
+
+                    UserActions.Add(new UserAction
+                    {
+                        Path = id,
+                        Char = key.ToString(),
+                        Time = time
+                    });
+                }
+                 
             }
         }
         public static DependencyObject GetParent(DependencyObject obj)
@@ -89,10 +118,11 @@ namespace WpfApplication1
                 return fce != null ? fce.Parent : null;
             }
 
-            if (obj.GetType().Name.Contains("PopupRoot"))
-                return LogicalTreeHelper.GetParent(obj);
+            //if (obj.GetType().Name.Contains("PopupRoot"))
+            //    return LogicalTreeHelper.GetParent(obj);
 
-            return VisualTreeHelper.GetParent(obj);
+            return VisualTreeHelper.GetParent(obj) ??
+                         LogicalTreeHelper.GetParent(obj); ;
         }
 
         public static string GetStack(DependencyObject source)
@@ -105,6 +135,11 @@ namespace WpfApplication1
                 if(!string.IsNullOrWhiteSpace(id))
                 {
                     stack.Push(id);
+                }
+
+                if (obj.GetType().Name.Contains("PopupRoot"))  
+                {
+                    stack.Push("^Popup");
                 }
 
                 obj = GetParent(obj);

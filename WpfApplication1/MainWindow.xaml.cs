@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.Factory;
 using System.Diagnostics;
+using WpfApplication1.Recording;
 
 namespace WpfApplication1
 {
@@ -42,6 +43,12 @@ namespace WpfApplication1
         {
             get;set;
         }
+
+        public ObservableCollection<UserAction> UserActions
+        {
+            get;set;
+        }
+        
         public MainWindow()
         {
             Students = new ObservableCollection<Student>();
@@ -49,7 +56,7 @@ namespace WpfApplication1
             Students.Add(new Student { FirstName = "Nora", LastName = "Golic", StudentId = "noragolic" });
             Students.Add(new Student { FirstName = "Robert", LastName = "Pepin", StudentId = "robertpepin" });
 
-            InitializeComponent();
+        
 
             // this.Loaded += MainWindow_Loaded;
             //StartEmulation();
@@ -62,6 +69,9 @@ namespace WpfApplication1
             //};
 
             MonitorService ms = new MonitorService();
+            UserActions = ms.UserActions;
+
+            InitializeComponent();
         }
 
         //private void GlobalClickEventHandler(object sender, MouseButtonEventArgs input)
@@ -145,6 +155,18 @@ namespace WpfApplication1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             System.Windows.MessageBox.Show("stop clicked!   ");
+        }
+
+        private void OnReplayClicked(object sender, RoutedEventArgs e)
+        {
+            var actions = UserActions.ToList();
+            PlaybackService service = new PlaybackService();
+            service.Replay(actions);
+        }
+
+        private void OnClearClicked(object sender, RoutedEventArgs e)
+        {
+            UserActions.Clear();
         }
     }
 }

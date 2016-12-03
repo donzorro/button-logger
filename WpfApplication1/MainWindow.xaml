@@ -10,68 +10,120 @@
     Width="525"
     Height="350"
     mc:Ignorable="d">
-    <StackPanel
-        AutomationProperties.AutomationId="MainWindow"
-        Orientation="Vertical">
-        <ComboBox
-            x:Name="icecream"
-            AutomationProperties.AutomationId="icecream">
-            <ComboBoxItem
-                AutomationProperties.AutomationId="dulcedeleche"
-                Content="Dulce de leche" />
-            <ComboBoxItem
-                AutomationProperties.AutomationId="chocolate"
-                Content="Chocolate" />
-            <ComboBoxItem
-                AutomationProperties.AutomationId="frutilla"
-                Content="Frutilla" />
-            <ComboBoxItem
-                AutomationProperties.AutomationId="vainilla"
-                Content="Vainilla" />
-        </ComboBox>
-        <TextBox
-            x:Name="txtbox"
-            VerticalAlignment="Top"
-            AutomationProperties.AutomationId="txtbox" />
-        <ListBox
-            Margin="20,50"
-            AutomationProperties.AutomationId="Students"
-            ItemsSource="{Binding ElementName=ctl, Path=Students}">
-            <ListBox.ItemContainerStyle>
-                <Style
-                    BasedOn="{StaticResource {x:Type ListBoxItem}}"
-                    TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="AutomationProperties.AutomationId" Value="{Binding StudentId}" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="50*" />
+            <ColumnDefinition
+                Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Column="0"
+            AutomationProperties.AutomationId="MainWindow"
+            Orientation="Vertical">
+            <ComboBox
+                x:Name="icecream"
+                AutomationProperties.AutomationId="icecream">
+                <ComboBoxItem
+                    AutomationProperties.AutomationId="dulcedeleche"
+                    Content="Dulce de leche" />
+                <ComboBoxItem
+                    AutomationProperties.AutomationId="chocolate"
+                    Content="Chocolate" />
+                <ComboBoxItem
+                    AutomationProperties.AutomationId="frutilla"
+                    Content="Frutilla" />
+                <ComboBoxItem
+                    AutomationProperties.AutomationId="vainilla"
+                    Content="Vainilla" />
+            </ComboBox>
+            <TextBox
+                x:Name="txtbox"
+                VerticalAlignment="Top"
+                AutomationProperties.AutomationId="txtbox" />
+            <ListBox
+                Margin="20,50"
+                AutomationProperties.AutomationId="Students"
+                ItemsSource="{Binding ElementName=ctl, Path=Students}">
+                <ListBox.ItemContainerStyle>
+                    <Style
+                        BasedOn="{StaticResource {x:Type ListBoxItem}}"
+                        TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="AutomationProperties.AutomationId" Value="{Binding StudentId}" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            AutomationProperties.AutomationId="DataTemplate">
+                            <StackPanel
+                                Margin="5"
+                                Orientation="Vertical">
+                                <Button
+                                    AutomationProperties.AutomationId="StudentName"
+                                    Content="{Binding StudentId}" />
+                                <local:financialvalue />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                AutomationProperties.AutomationId="StartButton"
+                Click="Button_Click"
+                Content="start" />
+
+
+
+            <Button
+                x:Name="stopButton"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                AutomationProperties.AutomationId="stopButton"
+                Click="Button_Click_1"
+                Content="stop" />
+        </StackPanel>
+
+        <ItemsControl
+            Grid.Column="1"
+            ItemsSource="{Binding UserActions, ElementName=ctl}">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        AutomationProperties.AutomationId="DataTemplate">
-                        <StackPanel
-                            Margin="5"
-                            Orientation="Vertical">
-                            <Button
-                                AutomationProperties.AutomationId="StudentName"
-                                Content="{Binding StudentId}" />
-                            <local:financialvalue />
-                        </StackPanel>
-                    </Grid>
+                    <StackPanel
+                        Orientation="Vertical">
+                        <TextBlock
+                            Text="{Binding Path}" />
+
+                    </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
         <Button
+            x:Name="replayButton"
+            Grid.Row="1"
+            Grid.Column="1"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            AutomationProperties.AutomationId="StartButton"
-            Click="Button_Click"
-            Content="start" />
+            Click="OnReplayClicked"
+            Content="Replay" />
+
         <Button
-            x:Name="stopButton"
+            x:Name="clearButton"
+            Grid.Row="1"
+            Grid.Column="1"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            AutomationProperties.AutomationId="stopButton"
-            Click="Button_Click_1"
-            Content="stop" />
-    </StackPanel>
+            Click="OnClearClicked"
+            Content="Clear" />
+    </Grid>
 </Window>
