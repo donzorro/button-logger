@@ -56,10 +56,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TestApiCore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.TestApi.0.6.0.0\lib\net40\TestApiCore.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="TestApiWpf, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.TestApi.0.6.0.0\lib\net40\TestApiWpf.dll</HintPath>
       <Private>True</Private>
@@ -81,6 +77,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Recording\Input\Key.cs" />
+    <Compile Include="Recording\Input\Keyboard.cs" />
+    <Compile Include="Recording\Input\Mouse.cs" />
+    <Compile Include="Recording\Input\MouseButton.cs" />
+    <Compile Include="Recording\Input\MouseButtonState.cs" />
+    <Compile Include="Recording\Input\NamespaceDoc.cs" />
+    <Compile Include="Recording\Input\NativeMethods.cs" />
+    <Compile Include="Recording\Input\SendMouseInputFlags.cs" />
     <Compile Include="Recording\UserAction.cs" />
     <Page Include="financialvalue.xaml">
       <SubType>Designer</SubType>
